@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dark Monkey Love Story 🐵</title>
+
+<style>
+body{
+    margin:0;
+    background:black;
+    color:white;
+    font-family:Arial, sans-serif;
+    text-align:center;
+    overflow:hidden;
+}
+.page{
+    display:none;
+    height:100vh;
+    padding-top:40px;
+}
+.active{ display:block; }
+
+button{
+    padding:10px 20px;
+    margin:10px;
+    border:none;
+    border-radius:20px;
+    font-size:16px;
+    cursor:pointer;
+}
+.yes{background:green;color:white;}
+.no{background:red;color:white;}
+
+input{
+    padding:8px;
+    border-radius:10px;
+    border:none;
+}
+
+img{
+    width:220px;
+    margin-top:20px;
+}
+
+/* Lightning flash */
+.flash{
+    animation:flash 0.3s;
+}
+@keyframes flash{
+    0%{background:white;}
+    100%{background:black;}
+}
+
+/* Rain */
+.rain{
+    position:fixed;
+    width:2px;
+    height:15px;
+    background:cyan;
+    animation:fall linear infinite;
+}
+@keyframes fall{
+    from{transform:translateY(-100px);}
+    to{transform:translateY(100vh);}
+}
+
+/* Love glow animation */
+.loveText{
+    font-size:32px;
+    animation:glow 2s infinite alternate;
+}
+@keyframes glow{
+    from{color:white; text-shadow:0 0 10px pink;}
+    to{color:pink; text-shadow:0 0 25px red;}
+}
+</style>
+</head>
+<body>
+
+<audio id="bgm" src="bgm.mp3" loop></audio>
+
+<!-- PAGE 1 -->
+<div id="p1" class="page active">
+    <img src="sadmonkey.gif">
+    <h3>Naa romba depression la iruke 😔</h3>
+    <button onclick="nextPage(2)">Why?</button>
+</div>
+
+<!-- PAGE 2 -->
+<div id="p2" class="page">
+    <img src="sadmonkey.gif">
+    <p>
+    Ella perum avanga aala mama nu solranga…<br>
+    Ana en pondati enna mathikave matra 😭
+    </p>
+    <button onclick="startRain(); lightning(); nextPage(3)">
+        Enna pannanum?
+    </button>
+</div>
+
+<!-- PAGE 3 -->
+<div id="p3" class="page">
+    <p>
+    En pondatii um enna atleast oru time aavuthu mama nu sollanum 😢<br>
+    Avalta sollunga plsshhhh 👉👈
+    </p>
+    <button class="yes" onclick="nextPage(4)">OK</button>
+    <button class="no" onclick="itsOk()">No</button>
+</div>
+
+<!-- PAGE 4 -->
+<div id="p4" class="page">
+    <p>Mama nu type pannunga 😌</p>
+    <input id="mamaInput">
+    <br><br>
+    <button onclick="checkMama()">Submit</button>
+</div>
+
+<!-- PAGE 5 -->
+<div id="p5" class="page">
+    <img src="dancemonkey.gif">
+    <h2>Monkey Dance Adi Kuthikiraaaa 🔥</h2>
+    <button onclick="nextPage(6)">Next</button>
+</div>
+
+<!-- PAGE 6 -->
+<div id="p6" class="page">
+    <div class="loveText">
+        Love you dii Pondatii 😚🫂❤️‍🩹😁
+    </div>
+</div>
+
+<script>
+let current=1;
+let musicStarted=false;
+
+function nextPage(n){
+    document.getElementById("p"+current).classList.remove("active");
+    document.getElementById("p"+n).classList.add("active");
+    current=n;
+
+    if(!musicStarted){
+        document.getElementById("bgm").play();
+        musicStarted=true;
+    }
+}
+
+function startRain(){
+    for(let i=0;i<150;i++){
+        let drop=document.createElement("div");
+        drop.className="rain";
+        drop.style.left=Math.random()*100+"vw";
+        drop.style.animationDuration=(0.5+Math.random())+"s";
+        document.body.appendChild(drop);
+    }
+}
+
+function lightning(){
+    document.body.classList.add("flash");
+    setTimeout(()=>{
+        document.body.classList.remove("flash");
+    },300);
+}
+
+function checkMama(){
+    let val=document.getElementById("mamaInput").value.toLowerCase();
+    if(val==="mama"){
+        nextPage(5);
+    }else{
+        alert("Correct ah type pannunga 😅");
+    }
+}
+
+function itsOk(){
+    alert("Its ok paravala 😊");
+    location.reload();
+}
+</script>
+
+</body>
+</html>
